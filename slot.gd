@@ -1,5 +1,13 @@
 extends WinnableElement
+class_name SlotElement;
 
+
+func set_coordinate_chain(_chain : PackedInt32Array, enabled : bool) -> bool:
+	%button.disabled = ! (enabled || self.has_winner());
+	return ! %button.disabled;
+
+func enable_all() -> void:
+	%button.disabled = ! self.has_winner();
 
 
 func _won(player : Game.Player) -> void:
@@ -10,4 +18,4 @@ func _won(player : Game.Player) -> void:
 func _pressed() -> void:
 	if (! self.has_winner()):
 		self.won_by(Game.current_player);
-		Game.next_player();
+		Game.next_player(self.get_coordinate_chain());

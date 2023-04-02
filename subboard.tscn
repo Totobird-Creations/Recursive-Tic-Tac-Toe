@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtivdyq4fb1v7"]
+[gd_scene load_steps=3 format=3 uid="uid://dtivdyq4fb1v7"]
 
 [ext_resource type="Script" path="res://subboard.gd" id="1_frenf"]
+[ext_resource type="PackedScene" uid="uid://3diwdin2ymsd" path="res://player/indicator.tscn" id="2_od11n"]
 
 [node name="subboard" type="MarginContainer"]
 offset_right = 128.0
@@ -111,6 +112,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="lines" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 
@@ -149,3 +151,9 @@ anchor_right = 1.0
 anchor_bottom = 0.667
 offset_bottom = 3.0
 mouse_filter = 2
+
+[node name="player_indicator" parent="." instance=ExtResource("2_od11n")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="won" from="." to="." method="_won"]

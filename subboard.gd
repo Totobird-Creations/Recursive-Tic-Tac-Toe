@@ -35,11 +35,44 @@ func recurse(count : int) -> void:
 			self.pieces.append(instance);
 			child.add_child(instance);
 
+func get_coordinate(node : WinnableElement) -> int:
+	return self.pieces.find(node);
 
-func check_win(_player : Game.Player) -> void:
-	for method in WIN_METHODS:
-		
+func set_coordinate_chain(chain : PackedInt32Array, enabled : bool) -> bool:
+	%lines.modulate.a = 0.5 + 0.5 * float(int(enabled));
+	var first : int = -1;
+	if (len(chain) > 0):
+		first = chain[0];
+		chain.remove_at(0);
+	var passed := false;
+	for i in range(len(self.pieces)):
+		var piece := self.pieces[i] as WinnableElement;
+		passed = piece.set_coordinate_chain(chain.duplicate(), enabled && (piece is SlotElement || first == i)) || passed;
+	return passed;
 
-func _won(_player : Game.Player) -> void:
+func enable_all() -> void:
 	for piece in self.pieces:
-		self.pieces.queue_free();
+		piece.enable_all();
+
+
+func check_win(player : Game.Player) -> void:
+	for method in WIN_METHODS:
+		var winners := (method as Array).map(func(i : int): return self.pieces[i]._winner);
+		var success := true;
+		for winner in winners:
+			if (winner == -1 || winner != winners[0]):
+				success = false;
+				break;
+		if (success):
+			self.won_by(player);
+			break;
+
+func _won(player : Game.Player) -> void:
+	(func():
+		for piece in self.pieces:
+			piece.queue_free();
+		%grid.visible  = false;
+		%lines.visible = false;
+		%player_indicator.player = player;
+		self.pieces.clear();
+	).call_deferred();
