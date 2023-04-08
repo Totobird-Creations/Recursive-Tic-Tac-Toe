@@ -1,0 +1,146 @@
+[gd_scene load_steps=4 format=3 uid="uid://g1syptwrgg4f"]
+
+[ext_resource type="Script" path="res://board.gd" id="1_ly5to"]
+[ext_resource type="PackedScene" uid="uid://3diwdin2ymsd" path="res://player/indicator.tscn" id="2_6qbi3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpw15"]
+
+[node name="board" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_ly5to")
+
+[node name="menu" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="background" type="ColorRect" parent="menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="center" type="CenterContainer" parent="menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panel" type="MarginContainer" parent="menu/center"]
+layout_mode = 2
+
+[node name="background" type="ColorRect" parent="menu/center/panel"]
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="margin" type="MarginContainer" parent="menu/center/panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="vbox" type="VBoxContainer" parent="menu/center/panel/margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="grid" type="GridContainer" parent="menu/center/panel/margin/vbox"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+columns = 2
+
+[node name="recursions_label" type="Label" parent="menu/center/panel/margin/vbox/grid"]
+layout_mode = 2
+text = "Recursions"
+
+[node name="recursions_value" type="SpinBox" parent="menu/center/panel/margin/vbox/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+
+[node name="new_game" type="Button" parent="menu/center/panel/margin/vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "New Game"
+
+[node name="close" type="Button" parent="menu/center/panel"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bpw15")
+text = "X"
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="area" type="MarginContainer" parent="vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="board" type="MarginContainer" parent="vbox/area"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="turn_indicator" type="Control" parent="vbox/area"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="hbox" type="HBoxContainer" parent="vbox/area/turn_indicator"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="separator" type="ColorRect" parent="vbox/area/turn_indicator/hbox"]
+custom_minimum_size = Vector2(3, 0)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="vbox" type="VBoxContainer" parent="vbox/area/turn_indicator/hbox"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="player_indicator" parent="vbox/area/turn_indicator/hbox/vbox" instance=ExtResource("2_6qbi3")]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+player = 0
+
+[node name="label" type="Label" parent="vbox/area/turn_indicator/hbox/vbox"]
+layout_mode = 2
+text = "Current Turn"
+horizontal_alignment = 1
+
+[node name="menu_button" type="Button" parent="vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "Menu"
+
+[node name="camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="menu/center/panel/margin/vbox/new_game" to="." method="new_game"]
+[connection signal="pressed" from="menu/center/panel/margin/vbox/new_game" to="menu" method="hide"]
+[connection signal="pressed" from="menu/center/panel/close" to="menu" method="hide"]
+[connection signal="pressed" from="vbox/menu_button" to="menu" method="show"]

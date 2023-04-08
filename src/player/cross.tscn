@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu2nt7eb484cm"]
+
+[ext_resource type="Shader" path="res://player/cross.gdshader" id="1_sc4h2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urkql"]
+shader = ExtResource("1_sc4h2")
+
+[node name="cross" type="AspectRatioContainer"]
+modulate = Color(1, 0, 0.5, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="icon" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_urkql")
+layout_mode = 2

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://3diwdin2ymsd"]
+
+[ext_resource type="PackedScene" uid="uid://bu2nt7eb484cm" path="res://player/cross.tscn" id="1_6gypn"]
+[ext_resource type="Script" path="res://player/indicator.gd" id="1_h2ng2"]
+[ext_resource type="PackedScene" uid="uid://clqbs0vdnjjiv" path="res://player/nought.tscn" id="2_phtfv"]
+
+[node name="player_indicator" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_h2ng2")
+
+[node name="cross" parent="." instance=ExtResource("1_6gypn")]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="nought" parent="." instance=ExtResource("2_phtfv")]
+visible = false
+layout_mode = 2
+mouse_filter = 2
