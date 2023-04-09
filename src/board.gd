@@ -20,6 +20,7 @@ func new_game() -> void:
 	%board.custom_minimum_size = Vector2.ZERO;
 	%board.size                = Vector2.ZERO;
 	%board.add_child(subboard);
+	%turn_indicator.player = Game.current_player;
 
 
 func _ready() -> void:
@@ -35,6 +36,7 @@ func set_coordinate_chain(chain : PackedInt32Array) -> void:
 		subboard.enable_all();
 	else:
 		subboard.set_coordinate_chain(chain, true);
+	%turn_indicator.player = Game.current_player;
 
 
 var panning : bool  = false;

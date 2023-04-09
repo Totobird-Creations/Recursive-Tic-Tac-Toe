@@ -57,7 +57,7 @@ func is_won(chain : PackedInt32Array) -> bool:
 	if (self.has_winner()):
 		return true;
 	if (len(chain) == 0):
-		return self.has_winner();
+		return self.has_winner() || self.pieces.all(func(piece : WinnableElement): piece.has_winner());
 	var piece := self.pieces[chain[0]] as WinnableElement;
 	chain.remove_at(0);
 	return piece.is_won(chain);

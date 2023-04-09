@@ -7,6 +7,8 @@ signal set_coordinate_chain(coordinate : PackedInt32Array);
 enum Player {
 	Cross,
 	Nought,
+	Triangle,
+	Square,
 	_Max
 };
 var current_player : Player = Player.Cross;
